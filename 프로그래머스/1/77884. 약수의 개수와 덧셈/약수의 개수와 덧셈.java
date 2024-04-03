@@ -7,7 +7,6 @@ class Solution {
         int[] numbers = IntStream.rangeClosed(left, right).toArray();
 
         for (int number : numbers) {
-            System.out.println(number);
             answer = (IntStream.rangeClosed(1, number / 2).filter(i -> number % i == 0).count() + 1) % 2 == 0 ? answer + number : answer - number;
         }
         
