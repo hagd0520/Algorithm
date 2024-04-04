@@ -10,7 +10,7 @@ class Solution {
         visited = new int[words.length];
         this.words = words;
 
-        check(begin);
+        check(begin, -1);
 
         while (!queue.isEmpty()) {
             int curPoint = queue.remove(0);
@@ -26,23 +26,22 @@ class Solution {
         return answer;
     }
 
-    public void check(String begin) {
+    public void check(String begin, int curPoint) {
         for (int i = 0; i < words.length; i++) {
+            if (visited[i] != 0) continue;
             if (match(begin, words[i])) {
                 queue.add(i);
-                visited[i]++;
+                if (curPoint == -1) {
+                    visited[i]++;
+                    continue;
+                }
+                visited[i] = visited[curPoint] + 1;
             }
         }
     }
 
     public void check(int curPoint) {
-        for (int i = 0; i < words.length; i++) {
-            if (visited[i] != 0) continue;
-            if (match(words[curPoint], words[i])) {
-                queue.add(i);
-                visited[i] = visited[curPoint] + 1;
-            }
-        }
+        check(words[curPoint], curPoint);
     }
 
     public boolean match(String x, String y) {
